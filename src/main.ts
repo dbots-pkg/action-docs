@@ -31,7 +31,12 @@ try {
   runFile('post.sh')
 }
 catch (e) {
-  setFailed(e.stderr || e)
+  const error =
+    e instanceof Buffer ? e.toString() :
+      e.stderr ||
+        typeof e == 'object' ? JSON.stringify(e) :
+        e
+  setFailed(error)
 }
 
 function runFile(name: string) {
