@@ -6,6 +6,7 @@ import { desc as semverSort } from 'semver-sort'
 try {
   info('[notice] Run docs script')
   exec('npm run docs')
+  exec('ls ../docs')
 
   const {
     GITHUB_ACTOR,
