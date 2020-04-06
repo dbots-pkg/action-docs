@@ -34,8 +34,10 @@ catch (e) {
   const error =
     e instanceof Buffer ? e.toString() :
       e.stderr ||
+        e instanceof Error ? e.message :
         typeof e == 'object' ? JSON.stringify(e) :
-        e
+          e
+  console.error(e)
   setFailed(error)
 }
 
