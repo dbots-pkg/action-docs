@@ -4,4 +4,4 @@ description: Action that generates website docs for branches and tags using docg
 
 runs:
   using: node12
-  main: "lib/main.js"
+  main: "lib/index.js"
