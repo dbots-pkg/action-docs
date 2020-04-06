@@ -1,22 +1,17 @@
-# Action name
+# action-docs
 
-Action description
+Action that generates website docs for branches and tags using docgen
 
 ## Usage
 
 How to use it in a workflow:
 
 ```yaml
-# Workflow example
+- name: Build and deploy documentation
+  uses: dbots-pkg/action-docs@v1
+  env:
+    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
-
-### Inputs:
-
-- `placeholder` (optional) : description
-
-### Outputs:
-
-- `placeholder` : description
 
 ## License
 

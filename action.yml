@@ -1,21 +1,7 @@
-name: Action name
-author: Federico Grandi
-description: Action's description
-
-inputs:
-  placeholder:
-    description: String
-    required: false
-    default: String
-
-outputs:
-  placeholer:
-    description: String
+name: action-docs
+author: Federico Grandi <fgrandi30@gmail.com>
+description: Action that generates website docs for branches and tags using docgen
 
 runs:
   using: node12
   main: "lib/main.js"
-
-branding: # Icons from https://feathericons.com/
-  icon: package
-  color: white
