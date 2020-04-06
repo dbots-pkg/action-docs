@@ -1,0 +1,21 @@
+name: Action name
+author: Federico Grandi
+description: Action's description
+
+inputs:
+  placeholder:
+    description: String
+    required: false
+    default: String
+
+outputs:
+  placeholer:
+    description: String
+
+runs:
+  using: node12
+  main: "lib/main.js"
+
+branding: # Icons from https://feathericons.com/
+  icon: package
+  color: white
