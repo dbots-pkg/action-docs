@@ -17,8 +17,8 @@ const {
 (async () => {
   try {
     const options = {
+      cwd: resolve(__dirname, '..'),
       env: {
-        cwd: resolve(__dirname, '..'),
         HOME: HOME || '',
         refName: GITHUB_REF?.split('/').pop() || '',
         repo: `https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git`,
@@ -32,7 +32,7 @@ const {
     if (sourceType == 'tag' && validSemver(refName) && refName == getLastTag())
       options.env.updateLatest = 'yes'
 
-    exec(await which('bash', true), ['src/deploy.sh'], options)
+    await exec(await which('bash', true), ['src/deploy.sh'], options)
   }
   catch (e) {
     const error =
