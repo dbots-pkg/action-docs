@@ -3,7 +3,7 @@
 set -eo pipefail
 
 echo "[notice] Set up cloned repo"
-git clone $repo out -b $TARGET_BRANCH
+git clone $repo out -b $targetBranch
 cd out
 git pull
 git config user.name "${GITHUB_ACTOR}"
