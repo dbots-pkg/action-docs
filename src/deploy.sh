@@ -6,8 +6,8 @@ echo "[notice] Set up cloned repo"
 git clone $repo out -b $targetBranch
 cd out
 git pull
-git config user.name "${GITHUB_ACTOR}"
-git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+git config --global user.name "${GITHUB_ACTOR}"
+git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
 
 echo "[notice] Build main file"
 cp ../docs/docs.json $refName.json
