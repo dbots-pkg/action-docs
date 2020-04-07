@@ -22,7 +22,7 @@ const options = {
     repo: `https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git`,
     sourceType: GITHUB_REF?.split('/')[1] == 'heads' ? 'branch' : 'tag',
     targetBranch: 'docs',
-    HOME
+    HOME: HOME || ''
   }
 };
 
