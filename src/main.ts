@@ -1,8 +1,10 @@
 import { setFailed } from '@actions/core'
-import { execSync, execFileSync } from 'child_process'
+import { which } from '@actions/io'
+import { exec } from '@actions/exec'
+import { execSync } from 'child_process'
 import { valid as validSemver } from 'semver'
 import { desc as semverSort } from 'semver-sort'
-import { join as path } from 'path'
+import { resolve } from 'path'
 
 const {
   GITHUB_ACTOR,
@@ -21,14 +23,14 @@ const options = {
 }
 
 try {
-  runFile('setup.sh')
-  runFile('tagged.sh')
+  runFile('setup')
+  runFile('tagged')
 
   const { env: { refName, sourceType } } = options
   if (sourceType == 'tag' && validSemver(refName) && refName == getLastTag())
-    runFile('latest.sh')
+    runFile('latest')
 
-  runFile('post.sh')
+  runFile('post')
 }
 catch (e) {
   const error =
@@ -41,8 +43,8 @@ catch (e) {
   setFailed(error)
 }
 
-function runFile(name: string) {
-  return execFileSync(path(__dirname, '../src', name), options)
+async function runFile(name: string) {
+  return exec(await which('bash', true), [`src/${name}.sh`], { cwd: resolve(__dirname, '..') })
 }
 
 function getLastTag(): string {
