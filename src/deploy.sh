@@ -2,10 +2,6 @@
 
 set -eo pipefail
 
-echo "[notice] Run docs script"
-npm install node@lts
-npm run docs
-
 echo "[notice] Set up cloned repo"
 git clone $repo out -b $TARGET_BRANCH
 cd out
