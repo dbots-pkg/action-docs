@@ -15,7 +15,7 @@ const {
 
 const options = {
   env: {
-    refName: GITHUB_REF?.split('/').pop(),
+    refName: GITHUB_REF?.split('/').pop() || '',
     repo: `https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git`,
     sourceType: GITHUB_REF?.split('/')[1] == 'heads' ? 'branch' : 'tag',
     targetBranch: 'docs',
@@ -47,7 +47,10 @@ const options = {
 
 
 async function runFile(name: string) {
-  return exec(await which('bash', true), [`src/${name}.sh`], { cwd: resolve(__dirname, '..') })
+  return exec(await which('bash', true), [`src/${name}.sh`], {
+    ...options,
+    cwd: resolve(__dirname, '..')
+  })
 }
 
 function getLastTag(): string {
