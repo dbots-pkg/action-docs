@@ -12,7 +12,6 @@ const {
   GITHUB_REPOSITORY,
   GITHUB_TOKEN,
   HOME,
-  PATH
 } = process.env;
 
 (async () => {
@@ -21,7 +20,6 @@ const {
       cwd: resolve(__dirname, '..'),
       env: {
         HOME: HOME || '',
-        PATH: PATH || '',
         refName: GITHUB_REF?.split('/').pop() || '',
         repo: `https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git`,
         sourceType: GITHUB_REF?.split('/')[1] == 'heads' ? 'branch' : 'tag',

@@ -5,6 +5,7 @@ set -eo pipefail
 cd $GITHUB_WORKSPACE
 
 echo "[notice] Run docs script"
+npm install node@lts
 npm run docs
 
 echo "[notice] Set up cloned repo"
