@@ -1,10 +1,10 @@
-import { setFailed } from '@actions/core'
 import { which } from '@actions/io'
+import { setFailed } from '@actions/core'
 import { exec } from '@actions/exec'
 import { execSync } from 'child_process'
+import { join } from 'path'
 import { valid as validSemver } from 'semver'
 import { desc as semverSort } from 'semver-sort'
-import { join } from 'path'
 
 const {
   GITHUB_ACTOR,
