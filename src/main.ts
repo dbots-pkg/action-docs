@@ -20,28 +20,31 @@ const options = {
     sourceType: GITHUB_REF?.split('/')[1] == 'heads' ? 'branch' : 'tag',
     targetBranch: 'docs',
   }
-}
+};
 
-try {
-  runFile('setup')
-  runFile('tagged')
+(async () => {
+  try {
+    await runFile('setup')
+    await runFile('tagged')
 
-  const { env: { refName, sourceType } } = options
-  if (sourceType == 'tag' && validSemver(refName) && refName == getLastTag())
-    runFile('latest')
+    const { env: { refName, sourceType } } = options
+    if (sourceType == 'tag' && validSemver(refName) && refName == getLastTag())
+      await runFile('latest')
 
-  runFile('post')
-}
-catch (e) {
-  const error =
-    e instanceof Buffer ? e.toString() :
-      e.stderr ||
-        e instanceof Error ? e.message :
-        typeof e == 'object' ? JSON.stringify(e) :
-          e
-  console.error(e)
-  setFailed(error)
-}
+    await runFile('post')
+  }
+  catch (e) {
+    const error =
+      e instanceof Buffer ? e.toString() :
+        e.stderr ||
+          e instanceof Error ? e.message :
+          typeof e == 'object' ? JSON.stringify(e) :
+            e
+    console.error(e)
+    setFailed(error)
+  }
+})()
+
 
 async function runFile(name: string) {
   return exec(await which('bash', true), [`src/${name}.sh`], { cwd: resolve(__dirname, '..') })
