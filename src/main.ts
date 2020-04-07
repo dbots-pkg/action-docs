@@ -12,30 +12,27 @@ const {
   GITHUB_REPOSITORY,
   GITHUB_TOKEN,
   HOME
-} = process.env
-
-console.log(HOME)
-
-const options = {
-  env: {
-    refName: GITHUB_REF?.split('/').pop() || '',
-    repo: `https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git`,
-    sourceType: GITHUB_REF?.split('/')[1] == 'heads' ? 'branch' : 'tag',
-    targetBranch: 'docs',
-    HOME: HOME || ''
-  }
-};
+} = process.env;
 
 (async () => {
   try {
-    await runFile('setup')
-    await runFile('tagged')
+    const options = {
+      env: {
+        cwd: resolve(__dirname, '..'),
+        HOME: HOME || '',
+        refName: GITHUB_REF?.split('/').pop() || '',
+        repo: `https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git`,
+        sourceType: GITHUB_REF?.split('/')[1] == 'heads' ? 'branch' : 'tag',
+        targetBranch: 'docs',
+        updateLatest: 'no'
+      }
+    }
 
     const { env: { refName, sourceType } } = options
     if (sourceType == 'tag' && validSemver(refName) && refName == getLastTag())
-      await runFile('latest')
+      options.env.updateLatest = 'yes'
 
-    await runFile('post')
+    exec(await which('bash', true), ['src/deploy.sh'], options)
   }
   catch (e) {
     const error =
@@ -48,14 +45,6 @@ const options = {
     setFailed(error)
   }
 })()
-
-
-async function runFile(name: string) {
-  return exec(await which('bash', true), [`src/${name}.sh`], {
-    ...options,
-    cwd: resolve(__dirname, '..')
-  })
-}
 
 function getLastTag(): string {
   const tags = execSync('git tag')

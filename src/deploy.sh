@@ -1,0 +1,32 @@
+#!/bin/bash
+
+set -eo pipefail
+
+cd $GITHUB_WORKSPACE
+
+echo "[notice] Run docs script"
+npm run docs
+
+echo "[notice] Set up cloned repo"
+git clone $repo out -b $TARGET_BRANCH
+cd out
+git pull
+git config user.name "${GITHUB_ACTOR}"
+git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+
+echo "[notice] Build main file"
+cp ../docs/docs.json $refName.json
+git add .
+git commit -m "Docs build for ${sourceType} ${refName}: ${GITHUB_SHA}"
+
+if [ "$updateLatest" == "yes" ]; then
+  echo "[notice] Version update found, update latest"
+  cp ../docs/docs.json latest.json
+  git add .
+  git commit -m "Update 'latest' for version ${refName}: ${GITHUB_SHA}"
+else
+  echo "[notice] No version update found"
+fi
+
+echo "[notice] Push changes to repo"
+git push origin ${targetBranch}
