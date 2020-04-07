@@ -4,7 +4,6 @@ import { exec } from '@actions/exec'
 import { execSync } from 'child_process'
 import { valid as validSemver } from 'semver'
 import { desc as semverSort } from 'semver-sort'
-import { resolve } from 'path'
 
 const {
   GITHUB_ACTOR,
@@ -17,7 +16,6 @@ const {
 (async () => {
   try {
     const options = {
-      cwd: resolve(__dirname, '..'),
       env: {
         HOME: HOME || '',
         refName: GITHUB_REF?.split('/').pop() || '',
@@ -32,7 +30,7 @@ const {
     if (sourceType == 'tag' && validSemver(refName) && refName == getLastTag())
       options.env.updateLatest = 'yes'
 
-    await exec(await which('bash', true), ['src/deploy.sh'], options)
+    await exec(await which('bash', true), ['../src/deploy.sh'], options)
   }
   catch (e) {
     const error =
