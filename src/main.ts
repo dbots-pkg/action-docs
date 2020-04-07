@@ -11,7 +11,10 @@ const {
   GITHUB_REF,
   GITHUB_REPOSITORY,
   GITHUB_TOKEN,
+  HOME
 } = process.env
+
+console.log(HOME)
 
 const options = {
   env: {
@@ -19,6 +22,7 @@ const options = {
     repo: `https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git`,
     sourceType: GITHUB_REF?.split('/')[1] == 'heads' ? 'branch' : 'tag',
     targetBranch: 'docs',
+    HOME
   }
 };
 
