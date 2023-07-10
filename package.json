@@ -22,7 +22,7 @@
   "homepage": "https://github.com/dbots-pkg/action-docs#readme",
   "dependencies": {
     "@actions/core": "^1.2.6",
-    "semver": "^7.1.3",
+    "semver": "^7.5.2",
     "semver-sort": "0.0.4"
   },
   "devDependencies": {
