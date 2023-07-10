@@ -23,7 +23,7 @@
   "dependencies": {
     "@actions/core": "^1.2.6",
     "semver": "^7.1.3",
-    "semver-sort": "0.0.4"
+    "semver-sort": "1.0.0"
   },
   "devDependencies": {
     "@actions/exec": "^1.0.3",
